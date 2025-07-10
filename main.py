@@ -11,6 +11,9 @@ rock = pygame.image.load("media/rock.png")
 scissors_width = scissors.get_width()
 scissors_height = scissors.get_height()
 
+YELLOW = (255, 255, 0)
+FONT = pygame.font.SysFont(None, 16)
+
 def move_up(elem : pygame.Rect) :
   
     elem.y -= 2 
@@ -44,31 +47,34 @@ def main():
     scissors_data = []
     paper_data = []
     rock_data = []
-
-    for _ in range(20):
+    names = ["Bouchra", "Houssni", "Mohamed", "Oumayma","Fadwa"]
+    for i in range(0,len(names)):
         scissors_rect = pygame.Rect(
-            random.randint(0, screen.get_width() - scissors_width),
-            random.randint(0, screen.get_height() - scissors_height),
+            
+            random.randint(0, (screen.get_width() - scissors_width)/4),
+            random.randint(0, (screen.get_height() - scissors_height)/4),
             scissors_width,
             scissors_height
         )
         paper_rect = pygame.Rect(
-            random.randint(0, screen.get_width() - paper.get_width()),
-            random.randint(0, screen.get_height() - paper.get_height()),
+            random.randint((screen.get_width() - scissors_width)*3/4, screen.get_width() - paper.get_width()),
+            random.randint((screen.get_height() - scissors_height)*3/4, screen.get_height() - paper.get_height()),
             paper.get_width(),
             paper.get_height()
         )
         rock_rect = pygame.Rect(
-            random.randint(0, screen.get_width() - rock.get_width()),
-            random.randint(0, screen.get_height() - rock.get_height()),
+            random.randint(0, ( screen.get_width() - paper.get_width())*1/4),
+            random.randint((screen.get_height() - scissors_height)*3/4, screen.get_height() - rock.get_height()),
             rock.get_width(),
             rock.get_height()
         )
 
-        scissors_data.append({"rect": scissors_rect, "direction": random.choice(directions)})
-        paper_data.append({"rect": paper_rect, "direction": random.choice(directions)})
-        rock_data.append({"rect": rock_rect, "direction": random.choice(directions)})
+        paper_data.append({"rect": paper_rect, "direction": random.choice(directions),"name" : f'{names[i]}'})
+        rock_data.append({"rect": rock_rect, "direction": random.choice(directions), "name": f'{names[i]}'})
+        scissors_data.append({"rect": scissors_rect, "direction": random.choice(directions),"name": f'{names[i]}'})
 
+
+  
     def move(item):
         rect = item["rect"]
         direction = item["direction"]
@@ -92,7 +98,7 @@ def main():
                 item["direction"] = random.choice(directions)
 
         elif direction == 4:  # Up
-            if rect.y > 0:
+            if rect.y > 16:
                 move_up(rect)
             else:
                 item["direction"] = random.choice(directions)
@@ -135,15 +141,23 @@ def main():
         for item in scissors_data:
             move(item)
             screen.blit(scissors, item["rect"])
+            text = FONT.render(item["name"], True, YELLOW)
+            text_rect = text.get_rect(midbottom=item["rect"].midtop)
+            screen.blit(text, text_rect)
 
         for item in paper_data:
             move(item)
             screen.blit(paper, item["rect"])
+            text = FONT.render(item["name"], True, YELLOW)
+            text_rect = text.get_rect(midbottom=item["rect"].midtop)
+            screen.blit(text, text_rect)
 
         for item in rock_data:
             move(item)
             screen.blit(rock, item["rect"])
-
+            text = FONT.render(item["name"], True, YELLOW)
+            text_rect = text.get_rect(midbottom=item["rect"].midtop)
+            screen.blit(text, text_rect)
 
         for paper_item in paper_data[:]:
             for rock_item in rock_data[:]:
