@@ -38,6 +38,9 @@ def move_left(elem : pygame.Rect) :
     return elem 
 
 # scissors_list = [scissors] * 20
+def show_score(lilstItems ) :
+    for item in lilstItems : 
+        print(item["name"] ," : ", item["score"], end="\n")
 
 directions = [1, 2, 3, 4, 5, 6, 7, 8]
 def main():
@@ -68,13 +71,13 @@ def main():
             rock.get_width(),
             rock.get_height()
         )
+        score = 0
+        paper_data.append({"rect": paper_rect, "direction": random.choice(directions),"name" : f'{names[i]}', "score" : score})
+        rock_data.append({"rect": rock_rect, "direction": random.choice(directions), "name": f'{names[i]}', "score" : score})
+        scissors_data.append({"rect": scissors_rect, "direction": random.choice(directions),"name": f'{names[i]}', "score" : score})
 
-        paper_data.append({"rect": paper_rect, "direction": random.choice(directions),"name" : f'{names[i]}'})
-        rock_data.append({"rect": rock_rect, "direction": random.choice(directions), "name": f'{names[i]}'})
-        scissors_data.append({"rect": scissors_rect, "direction": random.choice(directions),"name": f'{names[i]}'})
 
-
-  
+        disqualified = [] 
     def move(item):
         rect = item["rect"]
         direction = item["direction"]
@@ -132,6 +135,10 @@ def main():
                 item["direction"] = random.choice(directions)
 
     while running:
+        scissors_count = len(scissors_data)
+        papers_count = len(paper_data)
+        rocks_count  =len(rock_data)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
@@ -162,25 +169,51 @@ def main():
         for paper_item in paper_data[:]:
             for rock_item in rock_data[:]:
                 if paper_item["rect"].colliderect(rock_item["rect"]):
+                    disqualified.append(rock_item)
                     rock_data.remove(rock_item)
+                    paper_item["score"] += 10
                     break
 
         for rock_item in rock_data[:]:
             for scissor_item in scissors_data[:]:
                 if rock_item["rect"].colliderect(scissor_item["rect"]):
+                    disqualified.append(scissor_item)
                     scissors_data.remove(scissor_item)
+                    rock_item["score"] += 10
                     break
 
         for scissor_item in scissors_data[:]:
             for paper_item in paper_data[:]:
                 if scissor_item["rect"].colliderect(paper_item["rect"]):
+                    disqualified.append(paper_item)
                     paper_data.remove(paper_item)
+                    scissor_item['score'] += 10
                     break
 
         pygame.display.update()
         clock.tick(60)
 
+        if(
+            scissors_count * papers_count == 0 and rocks_count == 0 or 
+            scissors_count * rocks_count == 0 and papers_count == 0 or 
+            rocks_count * papers_count == 0 and scissors_count == 0) : 
+            for elem in rock_data : 
+                elem["score"] *= 10
+            for elem in scissors_data : 
+                elem["score"] *= 10
+            for elem in paper_data : 
+                elem["score"] *= 10
+            running = False
+
     pygame.quit()
+
+    show_score(disqualified)
+    show_score(scissors_data)
+    show_score(rock_data)
+    show_score(paper_data)
+
+    
+    
 
 if __name__ == "__main__":
     main()
