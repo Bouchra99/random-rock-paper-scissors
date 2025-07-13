@@ -6,7 +6,6 @@ YELLOW = (255, 255, 0)
 GRAY = (200, 200, 200)
 DARK_GRAY = (150, 150, 150)
 
-
 class Button:
     def __init__(self, text, x, y, width, height, callback):
         self.text = text
