@@ -1,6 +1,10 @@
 import pygame
 import random
+from ui.button import Button
+
 pygame.init()
+
+
 screen = pygame.display.set_mode((500, 400))
 clock = pygame.time.Clock()
 
@@ -10,6 +14,7 @@ rock = pygame.image.load("media/rock.png")
 
 scissors_width = scissors.get_width()
 scissors_height = scissors.get_height()
+directions = [1, 2, 3, 4, 5, 6, 7, 8]
 
 YELLOW = (255, 255, 0)
 FONT = pygame.font.SysFont(None, 16)
@@ -37,48 +42,7 @@ def move_left(elem : pygame.Rect) :
     elem.x -= 2 
     return elem 
 
-# scissors_list = [scissors] * 20
-def show_score(lilstItems ) :
-    for item in lilstItems : 
-        print(item["name"] ," : ", item["score"], end="\n")
-
-directions = [1, 2, 3, 4, 5, 6, 7, 8]
-def main():
-    running = True
-    print("Hello from rock-paper-scissors!")
-
-    scissors_data = []
-    paper_data = []
-    rock_data = []
-    names = ["Bouchra", "Houssni", "Mohamed", "Oumayma","Fadwa"]
-    for i in range(0,len(names)):
-        scissors_rect = pygame.Rect(
-            
-            random.randint(0, (screen.get_width() - scissors_width)/4),
-            random.randint(0, (screen.get_height() - scissors_height)/4),
-            scissors_width,
-            scissors_height
-        )
-        paper_rect = pygame.Rect(
-            random.randint((screen.get_width() - scissors_width)*3/4, screen.get_width() - paper.get_width()),
-            random.randint((screen.get_height() - scissors_height)*3/4, screen.get_height() - paper.get_height()),
-            paper.get_width(),
-            paper.get_height()
-        )
-        rock_rect = pygame.Rect(
-            random.randint(0, ( screen.get_width() - paper.get_width())*1/4),
-            random.randint((screen.get_height() - scissors_height)*3/4, screen.get_height() - rock.get_height()),
-            rock.get_width(),
-            rock.get_height()
-        )
-        score = 0
-        paper_data.append({"rect": paper_rect, "direction": random.choice(directions),"name" : f'{names[i]}', "score" : score})
-        rock_data.append({"rect": rock_rect, "direction": random.choice(directions), "name": f'{names[i]}', "score" : score})
-        scissors_data.append({"rect": scissors_rect, "direction": random.choice(directions),"name": f'{names[i]}', "score" : score})
-
-
-        disqualified = [] 
-    def move(item):
+def move(item):
         rect = item["rect"]
         direction = item["direction"]
 
@@ -133,6 +97,73 @@ def main():
                 move_up(rect)
             else:
                 item["direction"] = random.choice(directions)
+
+def scores(scores_list) :
+    # show scores     
+    print("scores")
+
+def menu():
+    pygame.display.set_caption("menu")
+    running = True 
+
+    start_btn = Button("start game", (500 - 180)/2 , (400 - 50)/2 -30 , 180, 40, game)
+    score_btn = Button("scores", (500 - 180)/2  , (400 - 50)/2 + 30, 180, 40, menu)
+    
+    while running: 
+        screen.fill("black")
+
+        
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+            start_btn.handle_event(event)
+            score_btn.handle_event(event)
+        
+        start_btn.draw(screen)
+        score_btn.draw(screen)
+
+        pygame.display.update()
+
+    pygame.quit()
+
+def game():
+    running = True
+    pygame.display.set_caption("random rock-paper-scissors")
+
+    scissors_data = []
+    paper_data = []
+    rock_data = []
+    names = ["Bouchra", "ikhmasse", "Mohamed", "Abdel","Ayman"]
+    for i in range(0,len(names)):
+        scissors_rect = pygame.Rect(
+            
+            random.randint(0, (screen.get_width() - scissors_width)/4),
+            random.randint(0, (screen.get_height() - scissors_height)/4),
+            scissors_width,
+            scissors_height
+        )
+        paper_rect = pygame.Rect(
+            random.randint((screen.get_width() - scissors_width)*3/4, screen.get_width() - paper.get_width()),
+            random.randint((screen.get_height() - scissors_height)*3/4, screen.get_height() - paper.get_height()),
+            paper.get_width(),
+            paper.get_height()
+        )
+        rock_rect = pygame.Rect(
+            random.randint(0, ( screen.get_width() - paper.get_width())*1/4),
+            random.randint((screen.get_height() - scissors_height)*3/4, screen.get_height() - rock.get_height()),
+            rock.get_width(),
+            rock.get_height()
+        )
+        score = 0
+        paper_data.append({"rect": paper_rect, "direction": random.choice(directions),"name" : f'{names[i]}', "score" : score})
+        rock_data.append({"rect": rock_rect, "direction": random.choice(directions), "name": f'{names[i]}', "score" : score})
+        scissors_data.append({"rect": scissors_rect, "direction": random.choice(directions),"name": f'{names[i]}', "score" : score})
+
+
+        disqualified = [] 
+    
 
     while running:
         scissors_count = len(scissors_data)
@@ -203,17 +234,21 @@ def main():
                 elem["score"] *= 10
             for elem in paper_data : 
                 elem["score"] *= 10
-            running = False
+            # running = False
+            scores(disqualified)
 
     pygame.quit()
 
-    show_score(disqualified)
-    show_score(scissors_data)
-    show_score(rock_data)
-    show_score(paper_data)
+    # show_score(disqualified)
+    # show_score(scissors_data)
+    # show_score(rock_data)
+    # show_score(paper_data)
 
     
     
+
+def main():
+    menu()
 
 if __name__ == "__main__":
     main()
