@@ -13,7 +13,7 @@ class Button:
         self.color = YELLOW
         self.hover_color = WHITE
         self.callback = callback 
-        self.font = pygame.font.SysFont(None, 30)
+        self.font = pygame.font.SysFont('simsunextg', 25)
 
 
     def draw(self, surface):

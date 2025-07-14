@@ -18,8 +18,11 @@ scissors_height = scissors.get_height()
 directions = [1, 2, 3, 4, 5, 6, 7, 8]
 
 YELLOW = (255, 255, 0)
-FONT_16 = pygame.font.SysFont(None, 16)
-FONT_20 = pygame.font.SysFont(None, 20)
+FONT_16 = pygame.font.SysFont('consolas', 14)
+FONT_20 = pygame.font.SysFont('consolas', 18)
+
+background = pygame.mixer.Sound('sounds/fight-for-the-future.mp3')
+hit = pygame.mixer.Sound('sounds/pickup.wav')
 
 def move_up(elem : pygame.Rect) :
   
@@ -155,6 +158,7 @@ def menu():
 
 def game():
     running = True
+    background.play(-1)
     pygame.display.set_caption("random rock-paper-scissors")
     scissors_data = []
     paper_data = []
@@ -227,6 +231,7 @@ def game():
             for rock_item in rock_data[:]:
                 if paper_item["rect"].colliderect(rock_item["rect"]):
                     # disqualified.append(rock_item)
+                    hit.play()
                     for elem in score_list : 
                         if elem["name"] == paper_item["name"] :
                             elem["score"] += 10
@@ -240,6 +245,7 @@ def game():
             for scissor_item in scissors_data[:]:
                 if rock_item["rect"].colliderect(scissor_item["rect"]):
                     # disqualified.append(scissor_item)
+                    hit.play()
                     for elem in score_list : 
                         # if elem["name"] == scissor_item["name"] :
                         #     elem["score"] += scissor_item["score"]
@@ -253,6 +259,7 @@ def game():
         for scissor_item in scissors_data[:]:
             for paper_item in paper_data[:]:
                 if scissor_item["rect"].colliderect(paper_item["rect"]):
+                    hit.play()
                     # disqualified.append(paper_item)
                     for elem in score_list : 
                         if elem["name"] == scissor_item["name"] :
