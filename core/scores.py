@@ -1,5 +1,5 @@
 import pygame
-from utils.constants import screen, FONT_20, YELLOW
+from utils.constants import screen, FONT_20, YELLOW, bg_1
 from ui.button import Button
 
 
@@ -14,9 +14,12 @@ def scores(scores_list=None) :
 
     while running :     
         screen.fill("black")
+        screen.blit(bg_1,(0,0))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                
 
             start_btn.handle_event(event)
 

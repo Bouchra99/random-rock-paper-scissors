@@ -1,7 +1,7 @@
 import pygame
 import random
 from core.scores import scores
-from utils.constants import screen, FONT_16, YELLOW, background, scissors, paper, rock, directions, clock, scissors_width, scissors_height,hit
+from utils.constants import screen, FONT_16, YELLOW, background, scissors, paper, rock, directions, clock, scissors_width, scissors_height,hit, bg_1
 from utils.movement import move
 
 def game():
@@ -53,6 +53,7 @@ def game():
                 running = False
 
         screen.fill("black")
+        screen.blit(bg_1,(0,0))
 
         for item in scissors_data:
             move(item)

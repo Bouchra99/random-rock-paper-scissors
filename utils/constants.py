@@ -14,8 +14,15 @@ scissors_height = scissors.get_height()
 directions = [1, 2, 3, 4, 5, 6, 7, 8]
 
 YELLOW = (255, 255, 0)
-FONT_16 = pygame.font.SysFont('consolas', 14)
-FONT_20 = pygame.font.SysFont('consolas', 18)
+# FONT_16 = pygame.font.SysFont('consolas', 14)
+# FONT_20 = pygame.font.SysFont('consolas', 18)
+FONT_16 = pygame.font.Font("assets/font.ttf", 8)
+FONT_20 = pygame.font.Font("assets/font.ttf", 12)
 
 background = pygame.mixer.Sound('assets/sounds/fight-for-the-future.mp3')
 hit = pygame.mixer.Sound('assets/sounds/pickup.wav')
+
+
+bg_1 = pygame.image.load('assets/media/bg1.jpg')
+bg_2 = pygame.image.load('assets/media/bg2.jpg')
+bg_3 = pygame.image.load('assets/media/bg3.jpg')

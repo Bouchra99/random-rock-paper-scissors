@@ -1,7 +1,7 @@
 import pygame
 from core.game import game
 from core.scores import scores
-from utils.constants import screen, FONT_20, YELLOW
+from utils.constants import screen, FONT_20, YELLOW, bg_1,bg_2,bg_3
 from ui.button import Button
 
 def menu():
@@ -13,7 +13,7 @@ def menu():
     while running: 
         screen.fill("black")
 
-        
+        screen.blit(bg_1,(0,0))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
