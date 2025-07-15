@@ -1,0 +1,21 @@
+import pygame 
+pygame.font.init()
+pygame.mixer.init()
+
+screen = pygame.display.set_mode((500, 400))
+clock = pygame.time.Clock()
+
+scissors = pygame.image.load("assets/media/scissors.png")
+paper = pygame.image.load("assets/media/paper.png")
+rock = pygame.image.load("assets/media/rock.png")
+
+scissors_width = scissors.get_width()
+scissors_height = scissors.get_height()
+directions = [1, 2, 3, 4, 5, 6, 7, 8]
+
+YELLOW = (255, 255, 0)
+FONT_16 = pygame.font.SysFont('consolas', 14)
+FONT_20 = pygame.font.SysFont('consolas', 18)
+
+background = pygame.mixer.Sound('assets/sounds/fight-for-the-future.mp3')
+hit = pygame.mixer.Sound('assets/sounds/pickup.wav')
